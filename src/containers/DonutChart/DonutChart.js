@@ -1,10 +1,11 @@
 import React, { Component } from "react";
+import Header from "../../components/Header/Header";
 
 class DonutChart extends Component {
   render() {
     return (
       <React.Fragment>
-        <div>Header</div>
+        <Header />
         <div>Form</div>
         <div>The chart</div>
       </React.Fragment>
