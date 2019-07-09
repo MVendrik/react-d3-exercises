@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Header from "../../components/Header/Header";
 import Form from "../../components/Form/Form";
-import "./DonutChart.css";
+import "./SpendingTracker.css";
 
 class DonutChart extends Component {
   render() {

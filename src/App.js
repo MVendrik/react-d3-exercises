@@ -1,13 +1,13 @@
 import React from "react";
 import "./App.css";
 import Layout from "./components/Layout/Layout";
-import DonutChart from "./containers/DonutChart/DonutChart";
+import SpendingTracker from "./containers/SpendingTracker/SpendingTracker";
 
 function App() {
   return (
     <div>
       <Layout>
-        <DonutChart />
+        <SpendingTracker />
       </Layout>
     </div>
   );
