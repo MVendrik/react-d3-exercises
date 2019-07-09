@@ -1,10 +1,14 @@
 import React from "react";
 import "./App.css";
+import Layout from "./components/Layout/Layout";
+import DonutChart from "./containers/DonutChart/DonutChart";
 
 function App() {
   return (
     <div>
-      <h1>Test</h1>
+      <Layout>
+        <DonutChart />
+      </Layout>
     </div>
   );
 }
