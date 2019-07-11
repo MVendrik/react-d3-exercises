@@ -2,19 +2,20 @@ import React, { Component } from "react";
 import Header from "../../components/Header/Header";
 import Form from "../../components/Form/Form";
 import "./SpendingTracker.css";
+import DonutChart from "./DonutChart/DonutChart";
 
-class DonutChart extends Component {
+class SpendingTracker extends Component {
   render() {
     return (
       <React.Fragment>
         <Header />
-        <div className={"indigo MainContent"}>
+        <div className={"MainContent row indigo"}>
           <Form />
-          <div />
+          <DonutChart />
         </div>
       </React.Fragment>
     );
   }
 }
 
-export default DonutChart;
+export default SpendingTracker;
