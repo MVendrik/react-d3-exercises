@@ -2,18 +2,19 @@ import React, { Component } from "react";
 import * as d3 from "d3";
 
 class DonutChart extends Component {
-  state = {};
+  state = {
+    data: [
+      { name: "rent", cost: 500 },
+      { name: "bills", cost: 200 },
+      { name: "snacks", cost: 100 }
+    ]
+  };
 
   componentDidMount() {
     this.drawchart();
   }
 
   drawchart() {
-    const data = [
-      { name: "rent", cost: 500 },
-      { name: "bills", cost: 200 },
-      { name: "snacks", cost: 100 }
-    ];
     const dimensions = { height: 300, width: 300, radius: 150 };
     const center = {
       x: dimensions.width / 2 + 5,
@@ -21,7 +22,7 @@ class DonutChart extends Component {
     };
 
     const colours = d3.scaleOrdinal(d3["schemeSet2"]);
-    colours.domain(data.map(d => d.name));
+    colours.domain(this.state.data.map(d => d.name));
 
     const svg = d3
       .select(this.refs.Canvas)
@@ -43,7 +44,7 @@ class DonutChart extends Component {
       .outerRadius(dimensions.radius)
       .innerRadius(dimensions.radius / 2);
 
-    const paths = graph.selectAll("path").data(pie(data));
+    const paths = graph.selectAll("path").data(pie(this.state.data));
 
     paths.exit().remove();
 
@@ -53,11 +54,22 @@ class DonutChart extends Component {
       .enter()
       .append("path")
       .attr("class", "arc")
-      .attr("d", arcPath)
       .attr("stroke", "#fff")
       .attr("stroke-width", 3)
-      .attr("fill", d => colours(d.data.name));
+      .attr("fill", d => colours(d.data.name))
+      .transition()
+      .duration(750)
+      .attrTween("d", d => this.arcTweenEnter(d, arcPath));
   }
+
+  arcTweenEnter = (data, arc) => {
+    let i = d3.interpolate(data.endAngle, data.startAngle);
+
+    return t => {
+      data.startAngle = i(t);
+      return arc(data);
+    };
+  };
 
   render() {
     return <div ref={"Canvas"} />;
