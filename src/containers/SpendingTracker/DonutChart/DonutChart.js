@@ -1,17 +1,37 @@
 import React, { Component } from "react";
 import * as d3 from "d3";
+import firebase from "../../../Firestore";
 
 class DonutChart extends Component {
   state = {
-    data: [
-      { name: "rent", cost: 500 },
-      { name: "bills", cost: 200 },
-      { name: "snacks", cost: 100 }
-    ]
+    data: []
   };
 
   componentDidMount() {
-    this.drawchart();
+    const db = firebase.firestore();
+    let dataArray = [];
+    db.collection("expenses").onSnapshot(res => {
+      res.docChanges().forEach(change => {
+        const doc = { ...change.doc.data(), id: change.doc.id };
+
+        switch (change.type) {
+          case "added":
+            dataArray.push(doc);
+            break;
+          case "modified":
+            const index = dataArray.findIndex(item => item.id === doc.id);
+            dataArray[index] = doc;
+            break;
+          case "removed":
+            dataArray = dataArray.filter(item => item.id !== doc.id);
+            break;
+          default:
+            break;
+        }
+      });
+      this.setState({ data: dataArray });
+      this.drawchart();
+    });
   }
 
   drawchart() {
