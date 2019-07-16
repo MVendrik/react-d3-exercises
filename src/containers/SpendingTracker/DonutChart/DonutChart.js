@@ -44,13 +44,8 @@ class DonutChart extends Component {
     const colours = d3.scaleOrdinal(d3["schemeSet2"]);
     colours.domain(this.state.data.map(d => d.name));
 
-    const svg = d3
-      .select(this.refs.Canvas)
-      .append("svg")
-      .attr("width", dimensions.width + 150)
-      .attr("height", dimensions.height + 150);
-
-    const graph = svg
+    const graph = d3
+      .select(this.refs.canvas)
       .append("g")
       .attr("transform", `translate(${center.x}, ${center.y})`);
 
@@ -92,7 +87,11 @@ class DonutChart extends Component {
   };
 
   render() {
-    return <div ref={"Canvas"} />;
+    return (
+      <div>
+        <svg width={450} height={450} ref={"canvas"} />
+      </div>
+    );
   }
 }
 
