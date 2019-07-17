@@ -5,7 +5,7 @@ import SpendingTracker from "./containers/SpendingTracker/SpendingTracker";
 
 function App() {
   return (
-    <div>
+    <div className={"Content"}>
       <Layout>
         <SpendingTracker />
       </Layout>

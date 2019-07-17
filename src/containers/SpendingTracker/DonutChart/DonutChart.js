@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import * as d3 from "d3";
 import firebase from "../../../Firestore";
+import { legendColor } from "d3-svg-legend";
 
 class DonutChart extends Component {
   state = {
@@ -75,6 +76,26 @@ class DonutChart extends Component {
       .transition()
       .duration(750)
       .attrTween("d", d => this.arcTweenEnter(d, arcPath));
+
+    // create the legend
+    const legendGroup = d3
+      .select(this.refs.canvas)
+      .append("g")
+      .attr("transform", `translate(${dimensions.width + 40}, 10)`);
+
+    const legend = legendColor()
+      .shape("circle")
+      .shapePadding(10)
+      .scale(colours);
+
+    legendGroup.call(legend);
+    legendGroup.selectAll("text").attr("fill", "white");
+
+    // create the mouseover and mouseout events for all paths
+    graph
+      .selectAll("path")
+      .on("mouseover", this.handleMouseOVer)
+      .on("mouseout", (d, i, n) => this.handleMouseOut(d, i, n, colours));
   }
 
   arcTweenEnter = (data, arc) => {
@@ -86,9 +107,23 @@ class DonutChart extends Component {
     };
   };
 
+  handleMouseOVer = (d, i, n) => {
+    d3.select(n[i])
+      .transition("changeSliceFill")
+      .duration(300)
+      .attr("fill", "#fff");
+  };
+
+  handleMouseOut = (d, i, n, colours) => {
+    d3.select(n[i])
+      .transition("changeSliceFill")
+      .duration(300)
+      .attr("fill", colours(d.data.name));
+  };
+
   render() {
     return (
-      <div>
+      <div className={"col s12 m4 push-m2"}>
         <svg width={450} height={450} ref={"canvas"} />
       </div>
     );

@@ -43,46 +43,42 @@ class Form extends Component {
   render() {
     const classNames = "active";
     return (
-      <div className={" indigo"}>
-        <div className={"col s12 m4"}>
-          <form className={"card z-depth-0"} onSubmit={this.submitFormHandler}>
-            <div className={"card-content"}>
-              <span className={"card-title indigo-text"}>Add item:</span>
-              <div className={"input-field"}>
-                <input
-                  type="text"
-                  id="name"
-                  required
-                  value={this.state.dataForm.name.value}
-                  onChange={e => this.inputChangedHandler(e, "name")}
-                />
-                <label for="name" className={classNames}>
-                  Item name
-                </label>
-              </div>
-              <div className={"input-field"}>
-                <input
-                  type="number"
-                  id="cost"
-                  required
-                  value={this.state.dataForm.cost.value}
-                  onChange={e => this.inputChangedHandler(e, "cost")}
-                />
-                <label for="cost" className={classNames}>
-                  Item Cost ($)
-                </label>
-              </div>
-              <div className={"input-field center"}>
-                <button className={"btn-large pink white-text"}>
-                  Add Item
-                </button>
-              </div>
-              <div className={"input-field center"}>
-                <p className={"red-text"} id="error" />
-              </div>
+      <div className={" indigo col s12 m4 push-m1"}>
+        <form className={"card z-depth-0"} onSubmit={this.submitFormHandler}>
+          <div className={"card-content"}>
+            <span className={"card-title indigo-text"}>Add item:</span>
+            <div className={"input-field"}>
+              <input
+                type="text"
+                id="name"
+                required
+                value={this.state.dataForm.name.value}
+                onChange={e => this.inputChangedHandler(e, "name")}
+              />
+              <label for="name" className={classNames}>
+                Item name
+              </label>
             </div>
-          </form>
-        </div>
+            <div className={"input-field"}>
+              <input
+                type="number"
+                id="cost"
+                required
+                value={this.state.dataForm.cost.value}
+                onChange={e => this.inputChangedHandler(e, "cost")}
+              />
+              <label for="cost" className={classNames}>
+                Item Cost ($)
+              </label>
+            </div>
+            <div className={"input-field center"}>
+              <button className={"btn-large pink white-text"}>Add Item</button>
+            </div>
+            <div className={"input-field center"}>
+              <p className={"red-text"} id="error" />
+            </div>
+          </div>
+        </form>
       </div>
     );
   }

@@ -4,9 +4,9 @@ import "./Layout.css";
 class Layout extends Component {
   render() {
     return (
-      <div>
+      <div className={"ScreenContent"}>
         <div>The toolbar</div>
-        <main className={"Content"}>{this.props.children}</main>
+        <main>{this.props.children}</main>
       </div>
     );
   }
