@@ -77,10 +77,9 @@ class DonutChart extends Component {
       .duration(750)
       .attrTween("d", d => this.arcTweenEnter(d, arcPath));
 
-    // create the legend
+    // Add legend to group
     const legendGroup = d3
-      .select(this.refs.canvas)
-      .append("g")
+      .select(this.refs.legendGroup)
       .attr("transform", `translate(${dimensions.width + 40}, 10)`);
 
     const legend = legendColor()
@@ -91,11 +90,12 @@ class DonutChart extends Component {
     legendGroup.call(legend);
     legendGroup.selectAll("text").attr("fill", "white");
 
-    // create the mouseover and mouseout events for all paths
+    // create the mouseover, mouseout and click events for all paths
     graph
       .selectAll("path")
       .on("mouseover", this.handleMouseOVer)
-      .on("mouseout", (d, i, n) => this.handleMouseOut(d, i, n, colours));
+      .on("mouseout", (d, i, n) => this.handleMouseOut(d, i, n, colours))
+      .on("click", this.handleClick);
   }
 
   arcTweenEnter = (data, arc) => {
@@ -121,10 +121,21 @@ class DonutChart extends Component {
       .attr("fill", colours(d.data.name));
   };
 
+  handleClick = d => {
+    const id = d.data.id;
+
+    const db = firebase.firestore();
+    db.collection("expenses")
+      .doc(id)
+      .delete();
+  };
+
   render() {
     return (
       <div className={"col s12 m4 push-m2"}>
-        <svg width={450} height={450} ref={"canvas"} />
+        <svg width={450} height={450} ref={"canvas"}>
+          <g ref={"legendGroup"} />
+        </svg>
       </div>
     );
   }
