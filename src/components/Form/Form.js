@@ -55,7 +55,7 @@ class Form extends Component {
                 value={this.state.dataForm.name.value}
                 onChange={e => this.inputChangedHandler(e, "name")}
               />
-              <label for="name" className={classNames}>
+              <label htmlFor="name" className={classNames}>
                 Item name
               </label>
             </div>
@@ -67,7 +67,7 @@ class Form extends Component {
                 value={this.state.dataForm.cost.value}
                 onChange={e => this.inputChangedHandler(e, "cost")}
               />
-              <label for="cost" className={classNames}>
+              <label htmlFor="cost" className={classNames}>
                 Item Cost ($)
               </label>
             </div>

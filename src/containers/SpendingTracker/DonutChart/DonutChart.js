@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import * as d3 from "d3";
 import firebase from "../../../Firestore";
 import { legendColor } from "d3-svg-legend";
+import d3Tip from "d3-tip";
+import "./DonutChart.css";
 
 class DonutChart extends Component {
   state = {
@@ -90,11 +92,28 @@ class DonutChart extends Component {
     legendGroup.call(legend);
     legendGroup.selectAll("text").attr("fill", "white");
 
-    // create the mouseover, mouseout and click events for all paths
+    // Create tooltip
+    const tip = d3Tip()
+      .attr("class", "tip card Tip")
+      .html(d => {
+        return `${d.data.name} <br>
+        ${d.data.cost}  <br> 
+         Click to delete`;
+      });
+
+    graph.call(tip);
+
+    // Create the mouseover, mouseout and click events for all paths
     graph
       .selectAll("path")
-      .on("mouseover", this.handleMouseOVer)
-      .on("mouseout", (d, i, n) => this.handleMouseOut(d, i, n, colours))
+      .on("mouseover", (d, i, n) => {
+        tip.show(d, n[i]);
+        this.handleMouseOVer(d, i, n);
+      })
+      .on("mouseout", (d, i, n) => {
+        this.handleMouseOut(d, i, n, colours);
+        tip.hide();
+      })
       .on("click", this.handleClick);
   }
 
