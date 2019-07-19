@@ -1,11 +1,12 @@
 import React, { Component } from "react";
 import "./Layout.css";
+import Toolbar from "../Navigation/Toolbar/Toolbar";
 
 class Layout extends Component {
   render() {
     return (
-      <div className={"ScreenContent"}>
-        <div>The toolbar</div>
+      <div className={"MainContent indigo"}>
+        <Toolbar />
         <main>{this.props.children}</main>
       </div>
     );

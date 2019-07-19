@@ -1,5 +1,4 @@
-.MainContent {
-  height: 79%;
-  padding: 139px;
-  margin: 0 auto;
+.ContentDonutChart {
+  padding-top: 50px;
+  margin-bottom: -20px;
 }

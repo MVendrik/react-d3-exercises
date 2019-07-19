@@ -10,7 +10,8 @@ class Form extends Component {
       cost: {
         value: ""
       }
-    }
+    },
+    activeLabel: false
   };
 
   state = this.initialState;
@@ -40,8 +41,14 @@ class Form extends Component {
       });
   };
 
+  labelClickHandler = e => {
+    this.setState(prevState => {
+      return { activeLabel: true };
+    });
+  };
+
   render() {
-    const classNames = "active";
+    const classNames = this.state.activeLabel ? "active" : "";
     return (
       <div className={" indigo col s12 m4 push-m1"}>
         <form className={"card z-depth-0"} onSubmit={this.submitFormHandler}>
@@ -54,6 +61,7 @@ class Form extends Component {
                 required
                 value={this.state.dataForm.name.value}
                 onChange={e => this.inputChangedHandler(e, "name")}
+                onSelect={e => this.labelClickHandler(e)}
               />
               <label htmlFor="name" className={classNames}>
                 Item name
@@ -66,6 +74,7 @@ class Form extends Component {
                 required
                 value={this.state.dataForm.cost.value}
                 onChange={e => this.inputChangedHandler(e, "cost")}
+                onSelect={e => this.labelClickHandler(e)}
               />
               <label htmlFor="cost" className={classNames}>
                 Item Cost ($)

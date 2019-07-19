@@ -9,7 +9,7 @@ class SpendingTracker extends Component {
     return (
       <React.Fragment>
         <Header />
-        <div className={"MainContent row indigo"}>
+        <div className={"ContentDonutChart row indigo"}>
           <Form />
           <DonutChart />
         </div>
