@@ -4,7 +4,9 @@ import "./NavigationItems.css";
 const navigationItems = props => (
   <ul className={"NavigationItems"}>
     <li>
-      <a href="/">Donut Chart</a>
+      <a className={"active"} href="/">
+        Donut Chart
+      </a>
     </li>
     <li>
       <a href="/">Fitness chart</a>
