@@ -7,7 +7,7 @@ import DonutChart from "./DonutChart/DonutChart";
 class SpendingTracker extends Component {
   render() {
     return (
-      <React.Fragment>
+      <div className={"indigo DonutChartFullPage"}>
         <Header
           headerClasses={"indigo darken-1 section "}
           h2Classes={"center white-text Header"}
@@ -19,7 +19,7 @@ class SpendingTracker extends Component {
           <Form />
           <DonutChart />
         </div>
-      </React.Fragment>
+      </div>
     );
   }
 }

@@ -7,7 +7,7 @@ class Layout extends Component {
     return (
       <div className={"MainContent"}>
         <Toolbar />
-        <main>{this.props.children}</main>
+        <div className={"Charts"}>{this.props.children}</div>
       </div>
     );
   }
