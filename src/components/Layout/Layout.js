@@ -5,7 +5,7 @@ import Toolbar from "../Navigation/Toolbar/Toolbar";
 class Layout extends Component {
   render() {
     return (
-      <div className={"MainContent indigo"}>
+      <div className={"MainContent"}>
         <Toolbar />
         <main>{this.props.children}</main>
       </div>

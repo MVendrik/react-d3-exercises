@@ -2,13 +2,11 @@ import React from "react";
 import "materialize-css/dist/css/materialize.min.css";
 import "./Header.css";
 
-const header = () => (
+const header = props => (
   <React.Fragment>
-    <header className={"indigo darken-1 section "}>
-      <h2 className={"center white-text Header"}>Donut Chart</h2>
-      <p className={"flow-text grey-text center text-lighten-2"}>
-        My monthly money tracker
-      </p>
+    <header className={props.headerClasses}>
+      <h2 className={props.h2Classes}>{props.h2Text}</h2>
+      <p className={props.pClasses}>{props.pText}</p>
     </header>
   </React.Fragment>
 );
