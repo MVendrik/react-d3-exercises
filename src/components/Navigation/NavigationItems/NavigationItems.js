@@ -1,15 +1,18 @@
 import React from "react";
 import "./NavigationItems.css";
+import { NavLink } from "react-router-dom";
+//import SpendingTracker from "../../../containers/SpendingTracker/SpendingTracker";
+//import FitnessTracker from "../../../containers/FitnessTracker/FitnessTracker";
 
-const navigationItems = props => (
+const navigationItems = () => (
   <ul className={"NavigationItems"}>
     <li>
-      <a className={"active"} href="/">
+      <NavLink to={"/"} exact>
         Donut Chart
-      </a>
+      </NavLink>
     </li>
     <li>
-      <a href="/">Fitness chart</a>
+      <NavLink to={"/fitnesstracker"}>Fitness chart</NavLink>
     </li>
   </ul>
 );
