@@ -1,13 +1,21 @@
 import React, { Component } from "react";
+import "./FitnessForm.css";
 
 class FitnessForm extends Component {
-  state = {};
+  state = {
+    fitnessForm: {
+      activity: "badminton",
+      duration: 0,
+      date: ""
+    }
+  };
   render() {
     return (
       <div className={"row"}>
         <form className={"col m6 push-m3"}>
           <p className={"flow-text grey-text center"}>
-            How much ...{this.props.activty} did you do today?
+            How much <span>{this.props.currentActivity} </span> did you do
+            today?
           </p>
           <input
             type="text"

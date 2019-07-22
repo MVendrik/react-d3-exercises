@@ -6,6 +6,15 @@ import FitnessChart from "./FitnessChart/FitnessChart";
 import FitnessForm from "../../components/FitnessForm/FitnessForm";
 
 class FitnessTracker extends Component {
+  state = {
+    currentActivity: "badminton"
+  };
+
+  handleButtonClick = activity => {
+    console.log(activity);
+    this.setState({ currentActivity: activity });
+  };
+
   render() {
     return (
       <div className={"grey darken-4 FitnessChartFullPage"}>
@@ -18,14 +27,27 @@ class FitnessTracker extends Component {
         />
         <div className={"row"}>
           <div className={"col s12 l5  ButtonSection"}>
-            <Button active={"active"} activity={"Badminton"} />
-            <Button activity={"Boxing"} />
-            <Button activity={"Gym"} />
-            <Button activity={"Walking"} />
+            <Button
+              active={"active"}
+              activity={"Badminton"}
+              clicked={activity => this.handleButtonClick("badminton")}
+            />
+            <Button
+              activity={"Boxing"}
+              clicked={activity => this.handleButtonClick("boxing")}
+            />
+            <Button
+              activity={"Gym"}
+              clicked={activity => this.handleButtonClick("gym")}
+            />
+            <Button
+              activity={"Walking"}
+              clicked={activity => this.handleButtonClick("walking")}
+            />
           </div>
           <FitnessChart />
         </div>
-        <FitnessForm />
+        <FitnessForm currentActivity={this.state.currentActivity} />
       </div>
     );
   }
