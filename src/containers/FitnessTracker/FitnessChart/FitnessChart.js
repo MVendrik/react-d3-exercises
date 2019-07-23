@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import "./FitnessChart.css";
+import * as d3 from "d3";
 import firebase from "../../../Firestore";
 
 class FitnessChart extends Component {
@@ -31,7 +32,21 @@ class FitnessChart extends Component {
         }
       });
       this.setState({ data: dataArray });
+      this.drawChart();
     });
+  }
+
+  drawChart() {
+    const margins = { top: 40, right: 20, bottom: 50, left: 100 };
+    const graphWidth = 560 - margins.left - margins.right;
+    const graphHeight = 400 - margins.top - margins.bottom;
+
+    const graph = d3
+      .select(this.refs.canvas)
+      .append("g")
+      .attr("width", graphWidth)
+      .attr("height", graphHeight)
+      .attr("transform", `translate(${margins.left}, ${margins.top})`);
   }
 
   render() {
