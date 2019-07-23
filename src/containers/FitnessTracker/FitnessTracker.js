@@ -11,7 +11,6 @@ class FitnessTracker extends Component {
   };
 
   handleButtonClick = activity => {
-    console.log(activity);
     this.setState({ currentActivity: activity });
   };
 
@@ -28,19 +27,24 @@ class FitnessTracker extends Component {
         <div className={"row"}>
           <div className={"col s12 l5  ButtonSection"}>
             <Button
-              active={"active"}
+              active={
+                this.state.currentActivity === "badminton" ? "active" : ""
+              }
               activity={"Badminton"}
               clicked={activity => this.handleButtonClick("badminton")}
             />
             <Button
+              active={this.state.currentActivity === "boxing" ? "active" : ""}
               activity={"Boxing"}
               clicked={activity => this.handleButtonClick("boxing")}
             />
             <Button
+              active={this.state.currentActivity === "gym" ? "active" : ""}
               activity={"Gym"}
               clicked={activity => this.handleButtonClick("gym")}
             />
             <Button
+              active={this.state.currentActivity === "walking" ? "active" : ""}
               activity={"Walking"}
               clicked={activity => this.handleButtonClick("walking")}
             />
