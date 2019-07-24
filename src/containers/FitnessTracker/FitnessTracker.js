@@ -49,7 +49,7 @@ class FitnessTracker extends Component {
               clicked={activity => this.handleButtonClick("walking")}
             />
           </div>
-          <FitnessChart />
+          <FitnessChart currentActivity={this.state.currentActivity} />
         </div>
         <FitnessForm currentActivity={this.state.currentActivity} />
       </div>

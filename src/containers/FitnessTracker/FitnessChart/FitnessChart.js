@@ -5,7 +5,8 @@ import firebase from "../../../Firestore";
 
 class FitnessChart extends Component {
   state = {
-    data: []
+    data: [],
+    currentActivity: "badminton"
   };
 
   componentDidMount() {
@@ -36,14 +37,24 @@ class FitnessChart extends Component {
     });
   }
 
+  componentDidUpdate() {
+    if (this.state.currentActivity !== this.props.currentActivity) {
+      this.setState({ currentActivity: this.props.currentActivity });
+    }
+    this.drawChart();
+  }
+
   drawChart() {
     const margins = { top: 40, right: 20, bottom: 50, left: 100 };
     const graphWidth = 600 - margins.left - margins.right;
     const graphHeight = 400 - margins.top - margins.bottom;
 
+    const currentData = this.state.data.filter(
+      item => item.activity === this.state.currentActivity
+    );
+
     const graph = d3
       .select(this.refs.canvas)
-      .append("g")
       .attr("width", graphWidth)
       .attr("height", graphHeight)
       .attr("transform", `translate(${margins.left}, ${margins.top})`);
@@ -52,12 +63,11 @@ class FitnessChart extends Component {
     const x = d3.scaleTime().range([0, graphWidth]);
     const y = d3.scaleLinear().range([graphHeight, 0]);
 
-    const xAxisGroup = graph
-      .append("g")
-      .attr("class", "x-axis")
+    const xAxisGroup = d3
+      .select(this.refs.xAxisG)
       .attr("transform", `translate(0, ${graphHeight})`);
 
-    const yAxisGroup = graph.append("g").attr("class", "y-axis");
+    const yAxisGroup = d3.select(this.refs.yAxisG);
 
     x.domain(d3.extent(this.state.data, d => new Date(d.date)));
     y.domain([0, d3.max(this.state.data, d => d.duration)]);
@@ -78,12 +88,32 @@ class FitnessChart extends Component {
       .selectAll("text")
       .attr("transform", "rotate(-40)")
       .attr("text-anchor", "end");
+
+    // create, update and remove circles for data points
+    const circles = graph.selectAll("circle").data(currentData);
+
+    circles.exit().remove();
+
+    circles.attr("cx", d => x(new Date(d.date))).attr("cy", d => y(d.duration));
+
+    circles
+      .enter()
+      .append("circle")
+      .attr("r", 4)
+      .attr("cx", d => x(new Date(d.date)))
+      .attr("cy", d => y(d.duration))
+      .attr("fill", "#ccc");
   }
 
   render() {
     return (
-      <div className={"col s12 l5 push-l1 ChartSection"}>
-        <svg width={600} height={400} ref={"canvas"} />
+      <div className={"col s12 m12 l5 push-l1 ChartSection"}>
+        <svg width={600} height={400}>
+          <g ref={"canvas"}>
+            <g className={"x-axis"} ref={"xAxisG"} />
+            <g className={"y-axis"} ref={"yAxisG"} />
+          </g>
+        </svg>
       </div>
     );
   }
