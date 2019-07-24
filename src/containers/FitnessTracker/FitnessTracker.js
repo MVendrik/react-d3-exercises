@@ -25,7 +25,7 @@ class FitnessTracker extends Component {
           pText={"My daily exercise"}
         />
         <div className={"row"}>
-          <div className={"col s12 l5  ButtonSection"}>
+          <div className={"col s12 l5 push-l1 ButtonSection"}>
             <Button
               active={
                 this.state.currentActivity === "badminton" ? "active" : ""

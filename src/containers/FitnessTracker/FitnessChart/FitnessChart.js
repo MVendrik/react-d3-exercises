@@ -38,7 +38,7 @@ class FitnessChart extends Component {
 
   drawChart() {
     const margins = { top: 40, right: 20, bottom: 50, left: 100 };
-    const graphWidth = 560 - margins.left - margins.right;
+    const graphWidth = 600 - margins.left - margins.right;
     const graphHeight = 400 - margins.top - margins.bottom;
 
     const graph = d3
@@ -47,12 +47,43 @@ class FitnessChart extends Component {
       .attr("width", graphWidth)
       .attr("height", graphHeight)
       .attr("transform", `translate(${margins.left}, ${margins.top})`);
+
+    // set up for axes
+    const x = d3.scaleTime().range([0, graphWidth]);
+    const y = d3.scaleLinear().range([graphHeight, 0]);
+
+    const xAxisGroup = graph
+      .append("g")
+      .attr("class", "x-axis")
+      .attr("transform", `translate(0, ${graphHeight})`);
+
+    const yAxisGroup = graph.append("g").attr("class", "y-axis");
+
+    x.domain(d3.extent(this.state.data, d => new Date(d.date)));
+    y.domain([0, d3.max(this.state.data, d => d.duration)]);
+
+    const xAxis = d3
+      .axisBottom(x)
+      .ticks(4)
+      .tickFormat(d3.timeFormat("%b %d"));
+    const yAxis = d3
+      .axisLeft(y)
+      .ticks(4)
+      .tickFormat(d => d + " m");
+
+    xAxisGroup.call(xAxis);
+    yAxisGroup.call(yAxis);
+
+    xAxisGroup
+      .selectAll("text")
+      .attr("transform", "rotate(-40)")
+      .attr("text-anchor", "end");
   }
 
   render() {
     return (
-      <div className={"col s12 l6 ChartSection"}>
-        <svg width={560} height={400} ref={"canvas"} />
+      <div className={"col s12 l5 push-l1 ChartSection"}>
+        <svg width={600} height={400} ref={"canvas"} />
       </div>
     );
   }
