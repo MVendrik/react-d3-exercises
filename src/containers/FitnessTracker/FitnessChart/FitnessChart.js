@@ -53,6 +53,8 @@ class FitnessChart extends Component {
       item => item.activity === this.state.currentActivity
     );
 
+    currentData.sort((a, b) => new Date(a.date) - new Date(b.date));
+
     const graph = d3
       .select(this.refs.canvas)
       .attr("width", graphWidth)
@@ -103,6 +105,21 @@ class FitnessChart extends Component {
       .attr("cx", d => x(new Date(d.date)))
       .attr("cy", d => y(d.duration))
       .attr("fill", "#ccc");
+
+    // Add the line path generator
+    const line = d3
+      .line()
+      .x(d => x(new Date(d.date)))
+      .y(d => y(d.duration));
+
+    const path = d3.select(this.refs.line);
+
+    path
+      .data([currentData])
+      .attr("fill", "none")
+      .attr("stroke", "#00bfa5")
+      .attr("stroke-width", 2)
+      .attr("d", line);
   }
 
   render() {
@@ -110,6 +127,7 @@ class FitnessChart extends Component {
       <div className={"col s12 m12 l5 push-l1 ChartSection"}>
         <svg width={600} height={400}>
           <g ref={"canvas"}>
+            <path ref={"line"} />
             <g className={"x-axis"} ref={"xAxisG"} />
             <g className={"y-axis"} ref={"yAxisG"} />
           </g>
