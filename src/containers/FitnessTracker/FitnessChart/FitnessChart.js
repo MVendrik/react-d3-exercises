@@ -120,6 +120,54 @@ class FitnessChart extends Component {
       .attr("stroke", "#00bfa5")
       .attr("stroke-width", 2)
       .attr("d", line);
+
+    // Add dotted lines
+    const dottedLines = d3.select(this.refs.dottedLines).style("opacity", 0);
+
+    const xDottedLine = d3
+      .select(this.refs.xDottedLine)
+      .attr("stroke", "#aaa")
+      .attr("stroke-width", 1)
+      .attr("stroke-dasharray", 4);
+
+    const yDottedLine = d3
+      .select(this.refs.yDottedLine)
+      .attr("stroke", "#aaa")
+      .attr("stroke-width", 1)
+      .attr("stroke-dasharray", 4);
+
+    // Add mouseover and mouseout events + show dottedlines
+    graph
+      .selectAll("circle")
+      .on("mouseover", (d, i, n) => {
+        d3.select(n[i])
+          .transition()
+          .duration(100)
+          .attr("r", 8)
+          .attr("fill", "#fff");
+
+        xDottedLine
+          .attr("x1", x(new Date(d.date)))
+          .attr("x2", x(new Date(d.date)))
+          .attr("y1", graphHeight)
+          .attr("y2", y(d.duration));
+
+        yDottedLine
+          .attr("x1", 0)
+          .attr("x2", x(new Date(d.date)))
+          .attr("y1", y(d.duration))
+          .attr("y2", y(d.duration));
+
+        dottedLines.style("opacity", 1);
+      })
+      .on("mouseleave", (d, i, n) => {
+        d3.select(n[i])
+          .transition()
+          .duration(100)
+          .attr("r", 4)
+          .attr("fill", "#ccc");
+        dottedLines.style("opacity", 0);
+      });
   }
 
   render() {
@@ -128,6 +176,10 @@ class FitnessChart extends Component {
         <svg width={600} height={400}>
           <g ref={"canvas"}>
             <path ref={"line"} />
+            <g ref={"dottedLines"} className={"lines"}>
+              <line ref={"xDottedLine"} />
+              <line ref={"yDottedLine"} />
+            </g>
             <g className={"x-axis"} ref={"xAxisG"} />
             <g className={"y-axis"} ref={"yAxisG"} />
           </g>
