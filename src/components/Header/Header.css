@@ -1,7 +1,16 @@
 .Header {
-  padding-top: 20px;
+  padding-top: 30px;
 }
 
 .headerFitness {
   background: #333;
+}
+
+.headerTree {
+  padding-bottom: 0;
+}
+
+.headerTreeText {
+  padding-bottom: 20px;
+  font-size: 22px;
 }
