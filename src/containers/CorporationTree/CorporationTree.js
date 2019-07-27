@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Header from "../../components/Header/Header";
+import { Add } from "@material-ui/icons";
 
 class CorporationTree extends Component {
   state = {};
@@ -15,6 +16,15 @@ class CorporationTree extends Component {
           }
           pText={"My company's organizational structure"}
         />
+        <a
+          href={"#modal"}
+          className={"btn-floating btn-large halfway-fab pink"}
+        >
+          <i>
+            <Add />
+          </i>
+        </a>
+
         <div>Modal</div>
         <div>Tree diagram</div>
       </div>
