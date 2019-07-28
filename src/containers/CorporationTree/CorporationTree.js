@@ -1,10 +1,29 @@
 import React, { Component } from "react";
 import Header from "../../components/Header/Header";
 import { Add } from "@material-ui/icons";
+import Modal from "../../components/Modal/Modal";
 
 class CorporationTree extends Component {
-  state = {};
+  state = {
+    modalShow: false
+  };
+
+  buttonClickedHandler = () => {
+    this.setState({ modalShow: true });
+  };
+
+  closeModalHandler = () => {
+    this.setState({ modalShow: false });
+  };
+
   render() {
+    let modal =
+      this.state.modalShow === true ? (
+        <Modal
+          show={this.state.modalShow}
+          modalClosed={this.closeModalHandler}
+        />
+      ) : null;
     return (
       <div className={"CorpTreeFullPage"}>
         <Header
@@ -16,16 +35,19 @@ class CorporationTree extends Component {
           }
           pText={"My company's organizational structure"}
         />
-        <a
-          href={"#modal"}
-          className={"btn-floating btn-large halfway-fab pink"}
+        <button
+          href="/"
+          className={"btn-floating btn-large halfway-fab pink modal-trigger"}
+          style={{ top: 200, right: 20, cursor: "pointer" }}
+          onClick={this.buttonClickedHandler}
         >
           <i>
             <Add />
           </i>
-        </a>
+        </button>
 
-        <div>Modal</div>
+        {modal}
+
         <div>Tree diagram</div>
       </div>
     );
