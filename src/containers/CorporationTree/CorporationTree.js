@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Header from "../../components/Header/Header";
 import { Add } from "@material-ui/icons";
 import Modal from "../../components/Modal/Modal";
+import TreeDiagram from "./TreeDiagram/TreeDiagram";
 
 class CorporationTree extends Component {
   state = {
@@ -22,7 +23,6 @@ class CorporationTree extends Component {
         <Modal
           show={this.state.modalShow}
           modalClosed={this.closeModalHandler}
-          submitted={this.closeModalHandler}
         />
       ) : null;
     return (
@@ -49,7 +49,7 @@ class CorporationTree extends Component {
 
         {modal}
 
-        <div>Tree diagram</div>
+        <TreeDiagram />
       </div>
     );
   }
