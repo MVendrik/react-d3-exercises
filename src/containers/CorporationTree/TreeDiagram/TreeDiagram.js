@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import firebase from "../../../Firestore";
+import * as d3 from "d3";
 
 class TreeDiagram extends Component {
   state = {
@@ -30,15 +31,37 @@ class TreeDiagram extends Component {
         }
       });
       this.setState({ data: dataArray });
-      console.log(this.state.data);
+      this.drawDiagram();
     });
+  }
+
+  drawDiagram() {
+    const dims = { height: 500, width: 1100 };
+
+    const graph = d3
+      .select(this.refs.graph)
+      .attr("transform", "translate(50, 50)");
+
+    const stratify = d3
+      .stratify()
+      .id(d => d.name)
+      .parentId(d => d.parent);
+
+    const rootNode = stratify(this.state.data);
+
+    const tree = d3.tree().size([dims.width, dims.height]);
+
+    const treeData = tree(rootNode);
+
+    const nodes = graph.selectAll(".nodes").data(treeData.descendants());
+    console.log(nodes);
   }
 
   render() {
     return (
       <div>
         <svg height={600} width={1200}>
-          <g />
+          <g ref={"graph"} />
         </svg>
       </div>
     );
