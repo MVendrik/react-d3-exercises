@@ -22,6 +22,7 @@ class CorporationTree extends Component {
         <Modal
           show={this.state.modalShow}
           modalClosed={this.closeModalHandler}
+          submitted={this.closeModalHandler}
         />
       ) : null;
     return (
