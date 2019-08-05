@@ -54,7 +54,48 @@ class TreeDiagram extends Component {
     const treeData = tree(rootNode);
 
     const nodes = graph.selectAll(".nodes").data(treeData.descendants());
-    console.log(nodes);
+
+    const enterNodes = nodes
+      .enter()
+      .append("g")
+      .attr("class", "node")
+      .attr("transform", d => `translate(${d.x}, ${d.y})`);
+
+    enterNodes
+      .append("rect")
+      .attr("fill", "#aaa")
+      .attr("stroke", "#555")
+      .attr("stroke-width", 2)
+      .attr("height", 50)
+      .attr("width", d => d.data.name.length * 15)
+      .attr("transform", d => {
+        let x = d.data.name.length * 3.5;
+        return `translate(${-x}, -25)`;
+      });
+
+    enterNodes
+      .append("text")
+      .attr("text-achor", "middle")
+      .attr("fill", "white")
+      .text(d => d.data.name);
+
+    // Add the links
+    const links = graph.selectAll(".link").data(treeData.links());
+
+    links
+      .enter()
+      .append("path")
+      .attr("class", "link")
+      .attr("fill", "none")
+      .attr("stroke", "#aaa")
+      .attr("stroke-width", 2)
+      .attr(
+        "d",
+        d3
+          .linkVertical()
+          .x(d => d.x)
+          .y(d => d.y)
+      );
   }
 
   render() {
