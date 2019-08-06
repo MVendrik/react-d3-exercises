@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import firebase from "../../../Firestore";
 import * as d3 from "d3";
+import "./TreeDiagram.css";
 
 class TreeDiagram extends Component {
   state = {
@@ -38,6 +39,15 @@ class TreeDiagram extends Component {
   drawDiagram() {
     const dims = { height: 500, width: 1100 };
 
+    // create the ordinal scale
+    const colours = d3.scaleOrdinal([
+      "#f4511e",
+      "#e91e63",
+      "#e53935",
+      "#9c27b0"
+    ]);
+    colours.domain(this.state.data.map(item => item.department));
+
     const graph = d3
       .select(this.refs.graph)
       .attr("transform", "translate(50, 50)");
@@ -54,30 +64,6 @@ class TreeDiagram extends Component {
     const treeData = tree(rootNode);
 
     const nodes = graph.selectAll(".nodes").data(treeData.descendants());
-
-    const enterNodes = nodes
-      .enter()
-      .append("g")
-      .attr("class", "node")
-      .attr("transform", d => `translate(${d.x}, ${d.y})`);
-
-    enterNodes
-      .append("rect")
-      .attr("fill", "#aaa")
-      .attr("stroke", "#555")
-      .attr("stroke-width", 2)
-      .attr("height", 50)
-      .attr("width", d => d.data.name.length * 15)
-      .attr("transform", d => {
-        let x = d.data.name.length * 3.5;
-        return `translate(${-x}, -25)`;
-      });
-
-    enterNodes
-      .append("text")
-      .attr("text-achor", "middle")
-      .attr("fill", "white")
-      .text(d => d.data.name);
 
     // Add the links
     const links = graph.selectAll(".link").data(treeData.links());
@@ -96,6 +82,32 @@ class TreeDiagram extends Component {
           .x(d => d.x)
           .y(d => d.y)
       );
+
+    const enterNodes = nodes
+      .enter()
+      .append("g")
+      .attr("class", "node")
+      .attr("transform", d => `translate(${d.x}, ${d.y})`);
+
+    enterNodes
+      .append("rect")
+      .attr("fill", d => colours(d.data.department))
+      .attr("stroke", "#555")
+      .attr("stroke-width", 2)
+      .attr("height", 50)
+      .attr("width", d => d.data.name.length * 15)
+      .attr("transform", (d, i, n) => {
+        let x = d.data.name.length * 7.5;
+        return `translate(${-x}, -25)`;
+      });
+
+    enterNodes
+      .append("text")
+      .attr("text-achor", "middle")
+      .attr("dy", 5)
+      .attr("transform", "translate(-20)")
+      .attr("fill", "white")
+      .text(d => d.data.name);
   }
 
   render() {
