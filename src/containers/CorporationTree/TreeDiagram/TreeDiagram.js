@@ -103,9 +103,8 @@ class TreeDiagram extends Component {
 
     enterNodes
       .append("text")
-      .attr("text-achor", "middle")
+      .attr("text-anchor", "middle")
       .attr("dy", 5)
-      .attr("transform", "translate(-20)")
       .attr("fill", "white")
       .text(d => d.data.name);
   }
