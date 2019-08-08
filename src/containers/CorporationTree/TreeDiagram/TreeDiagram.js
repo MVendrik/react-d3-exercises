@@ -57,6 +57,10 @@ class TreeDiagram extends Component {
       .id(d => d.name)
       .parentId(d => d.parent);
 
+    // remove old nodes and links when data is added
+    graph.selectAll(".node").remove();
+    graph.selectAll(".link").remove();
+
     const rootNode = stratify(this.state.data);
 
     const tree = d3.tree().size([dims.width, dims.height]);

@@ -22,6 +22,7 @@ class Modal extends Component {
   };
 
   submitFormHandler = e => {
+    e.preventDefault();
     const item = {
       name: this.state.employeeForm.name,
       parent: this.state.employeeForm.parent,
@@ -30,6 +31,7 @@ class Modal extends Component {
 
     const db = firebase.firestore();
     db.collection("employees").add(item);
+    this.props.modalClosed();
   };
 
   render() {
